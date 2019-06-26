@@ -1,0 +1,28 @@
+{
+  "name": "react-native-date-picker-light",
+  "version": "1.0.0",
+  "description": "Date picker for react native, light and does not use modals (will work on all platforms)",
+  "main": "datePicker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "date picker"
+  ],
+  "dependencies": {
+    "prop-types": "15.5.10",
+    "moment": "^2.24.0",
+    "react-native-vector-icons": "^6.2.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3",
+    "react-native": "^0.59.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prateek3255/react-native-infinite-looping-scroll.git"
+  },
+  "author": "Aly Abdelrahman",
+  "license": "MIT"
+}
