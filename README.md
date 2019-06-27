@@ -15,6 +15,9 @@ Format: ![After change of date](https://i.imgur.com/XMpZCWH.png)
 There are various props that can be passed, I will soon add more modularity
 (for icons since this depends on react native vector and for more styling control)
 
+##NOTE If you are not using React Native Vectors, for now you will need to use [react-native link react-native-vector-icons]
+
+
 the props allowed are 
 
 selected = function (returns the date and day)
