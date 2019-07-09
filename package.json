@@ -11,13 +11,12 @@
     "date picker"
   ],
   "dependencies": {
-    "prop-types": "15.5.10",
-    "moment": "^2.24.0",
-    "react-native-vector-icons": "^6.2.0"
+    "prop-types": ">10",
+    "moment": ">^1.0"
   },
   "peerDependencies": {
-    "react": "^16.8.3",
-    "react-native": "^0.59.9"
+    "react": ">14.0",
+    "react-native": ">^0.40"
   },
   "repository": {
     "type": "git",

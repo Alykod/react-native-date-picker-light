@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, StyleSheet} from "react-native";
-import Icon from "react-native-vector-icons/Feather";
+import { Text, View, TouchableOpacity, StyleSheet , Image} from "react-native";
 import moment from "moment";
 import PropTypes from 'prop-types';
 
@@ -43,7 +42,7 @@ export default class DatePicker extends Component {
         day: calenderDay,
         date: moment()
           .add(selectedWeekDaySet, "day")
-          .format(this.props.dateFormat ? this.props.dateFormat : "D"),
+          .format(this.props.dateFormat),
         monthYear: moment()
           .add(selectedWeekDaySet, "day")
           .format("MMMM YYYY")
@@ -95,10 +94,10 @@ export default class DatePicker extends Component {
           onPress={() => this.handlePress(date)}
           style={Styles.dateComponentDateTouchable}
           >
-          <Text style={{ color: isPressed ? this.props.pressedColor ? this.props.pressedColor : "#fff" : this.props.depressedColor ? this.props.depressedColor : "#7d7c7b" }}>
+          <Text style={{ color: isPressed ? this.props.pressedColor  : this.props.depressedColor  }}>
             {date.day}
           </Text>
-          <Text style={{ color: isPressed ? this.props.pressedColor ? this.props.pressedColor : "#fff" : this.props.depressedColor ? this.props.depressedColor : "#7d7c7b" }}>
+          <Text style={{ color: isPressed ? this.props.pressedColor : this.props.depressedColor  }}>
             {date.date}
           </Text>
         </TouchableOpacity>
@@ -113,23 +112,30 @@ export default class DatePicker extends Component {
         <View style={Styles.dateComponentDateView}>
           <Text />
           <TouchableOpacity onPress={() => this.handleArrowChange(1)}>
-            <Icon name="arrow-left" size={this.props.iconSize ? this.props.iconSize : 30} color={this.props.iconColor ? this.props.iconColor : "#FF7500"} />
+            <Image style={{width: this.props.iconSize, height: this.props.iconSize}} 
+            source={require('./left-arrow.png')}
+            />
           </TouchableOpacity>
           {this.state.weekObject.length != 0 &&
             this.handleDateComponentDisplay()}
           <TouchableOpacity onPress={() => this.handleArrowChange(-1)}>
-            <Icon name="arrow-right" size={this.props.iconSize ? this.props.iconSize : 30} color={this.props.iconColor ? this.props.iconColor : "#FF7500"} />
+          <Image style={{width: this.props.iconSize, height: this.props.iconSize}} 
+            source={require('./right-arrow.png')} />
           </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
+DatePicker.defaultProps = {
+    iconSize: 30,
+    dateFormat: "D",
+    pressedColor: "#fff",
+    depressedColor: "#7d7c7b",
+}
 
-
-dateComponent.PropTypes = {
+DatePicker.PropTypes = {
   iconSize: PropTypes.number,
-  iconColor: PropTypes.string,
   dateFormat: PropTypes.string,
   pressedColor: PropTypes.string,
   depressedColor: PropTypes.string,
