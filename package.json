@@ -1,6 +1,6 @@
 {
   "name": "react-native-date-picker-light",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Date picker for react native, light and does not use modals (will work on all platforms)",
   "main": "datePicker.js",
   "scripts": {
