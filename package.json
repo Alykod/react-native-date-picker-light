@@ -11,8 +11,8 @@
     "date picker"
   ],
   "dependencies": {
-    "prop-types": ">10",
-    "moment": ">1.0"
+    "prop-types": ">10.0",
+    "moment": ">2.0.0"
   },
   "peerDependencies": {
     "react": ">14.0",
