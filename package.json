@@ -12,11 +12,11 @@
   ],
   "dependencies": {
     "prop-types": ">10",
-    "moment": ">^1.0"
+    "moment": ">1.0"
   },
   "peerDependencies": {
     "react": ">14.0",
-    "react-native": ">^0.40"
+    "react-native": ">0.40"
   },
   "repository": {
     "type": "git",
