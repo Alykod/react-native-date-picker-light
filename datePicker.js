@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, StyleSheet , Image} from "react-native";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import PropTypes from 'prop-types';
 
 
-const days = ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const days = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
 
 export default class DatePicker extends Component {
@@ -20,6 +20,7 @@ export default class DatePicker extends Component {
     };
   }
   componentDidMount() {
+    moment.locale(this.props.locale);
     this.dateCreator();
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -45,7 +46,16 @@ export default class DatePicker extends Component {
           .format(this.props.dateFormat),
         monthYear: moment()
           .add(selectedWeekDaySet, "day")
-          .format("MMMM YYYY")
+          .format("MMMM YYYY"),
+        month: moment()
+          .add(selectedWeekDaySet, "day")
+          .format("MM"),
+        year: moment()
+          .add(selectedWeekDaySet, "day")
+          .format("YY"),
+        shortDate: moment()
+          .add(selectedWeekDaySet, "day")
+          .format("L")
       };
       weekObject[this.state.arrowCount][day] = dateObject;
     }
@@ -61,7 +71,11 @@ export default class DatePicker extends Component {
     } else{
       let dates = {
         day: date.day,
-        date: date.date
+        date: date.date,
+        monthYear: date.monthYear,
+        month: date.month,
+        year: date.year,
+        shortDate: date.shortDate
       }
       this.setState({
         selectedDate: {
@@ -132,14 +146,16 @@ DatePicker.defaultProps = {
     dateFormat: "D",
     pressedColor: "#fff",
     depressedColor: "#7d7c7b",
+    locale: 'es-mx'
 }
 
-DatePicker.PropTypes = {
+DatePicker.propTypes = {
   iconSize: PropTypes.number,
   dateFormat: PropTypes.string,
   pressedColor: PropTypes.string,
   depressedColor: PropTypes.string,
-  selected: PropTypes.func
+  selected: PropTypes.func,
+  locale: PropTypes.string
 }
 
 
