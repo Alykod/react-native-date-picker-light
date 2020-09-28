@@ -28,6 +28,22 @@ dateFormat = String (String from the date formats available in moment js) (defau
 
 iconSize = Number (changes the size of the arrows for navigation) (default size : 30)
 
+locale = String (changes the locale format of date) (default locale: 'es-mx')
+
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+Import library.
+```JS
+import DatePicker from 'react-native-date-picker-light';
+```
+
+
+Call DatePicker in Render().
+```JS
+<DatePicker locale={'es-mx'} selected={(date) => console.log(date)}></DatePicker>
+```
 
 
 ##Release 1.0.7
