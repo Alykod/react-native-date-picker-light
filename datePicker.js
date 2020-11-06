@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, StyleSheet , Image} from "react-native";
 import moment from "moment/min/moment-with-locales";
+var esLocale = require('moment/locale/es');
 import PropTypes from 'prop-types';
 
 
-const days = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+const days = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"];
 
 
 export default class DatePicker extends Component {
@@ -19,8 +20,16 @@ export default class DatePicker extends Component {
       }
     };
   }
-  componentDidMount() {
-    moment.locale(this.props.locale);
+  async componentDidMount() {
+    await moment.locale(this.props.locale);
+    await this.setState({
+      selectedDate: {
+        day: moment(this.props.startDate).format("ddd").slice(0,3),
+        date: moment(this.props.startDate).format(this.props.dateFormat)
+      }
+    });
+    console.log(moment(this.props.startDate).format("ddd").slice(0,3))
+    console.log(moment(this.props.startDate).format(this.props.dateFormat))
     this.dateCreator();
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -32,9 +41,11 @@ export default class DatePicker extends Component {
 
   dateCreator = () => {
     const daysArray = days;
+    
     let weekObject = [...this.state.weekObject];
     weekObject[this.state.arrowCount] = [];
-    let todaysDateIndex = daysArray.indexOf(moment().format("ddd"));
+    let todaysDateIndex = daysArray.indexOf(moment().format("ddd").slice(0,3));
+
     for (let day in daysArray) {
       let selectedWeekDaySet =
         day - todaysDateIndex + this.state.arrowCount * 7;
@@ -55,14 +66,18 @@ export default class DatePicker extends Component {
           .format("YY"),
         shortDate: moment()
           .add(selectedWeekDaySet, "day")
-          .format("L")
+          .format("L"),
+        shortDateTime: moment()
+          .add(selectedWeekDaySet, "day")
+          .format()
       };
       weekObject[this.state.arrowCount][day] = dateObject;
     }
+
     this.setState({ weekObject });
   };
 
-  handlePress = date => {
+  handlePress = async date => {
     if (
       this.state.selectedDate.day == date.day &&
       this.state.selectedDate.date == date.date
@@ -75,14 +90,16 @@ export default class DatePicker extends Component {
         monthYear: date.monthYear,
         month: date.month,
         year: date.year,
-        shortDate: date.shortDate
+        shortDate: date.shortDate,
+        shortDateTime: date.shortDateTime
       }
-      this.setState({
+      await this.setState({
         selectedDate: {
           day: date.day,
           date: date.date
         }
-      }, this.props.selected(dates));
+      });
+      await this.props.selected(dates)
     }
   };
 
@@ -94,7 +111,7 @@ export default class DatePicker extends Component {
 
   handleMonthYearComponent = () => {
     if(this.state.weekObject.length > 0)
-    return <Text  style={Styles.dateComponentYearText}>{this.state.weekObject[this.state.arrowCount][3].monthYear}</Text>
+    return <Text  style={Styles.dateComponentYearText}>{this.state.weekObject[this.state.arrowCount][1].monthYear}</Text>
   }
 
   handleDateComponentDisplay = () => {
@@ -108,12 +125,14 @@ export default class DatePicker extends Component {
           onPress={() => this.handlePress(date)}
           style={Styles.dateComponentDateTouchable}
           >
-          <Text style={{ color: isPressed ? this.props.pressedColor  : this.props.depressedColor  }}>
+          <Text style={{ color: this.props.depressedColor  }}>
             {date.day}
           </Text>
-          <Text style={{ color: isPressed ? this.props.pressedColor : this.props.depressedColor  }}>
-            {date.date}
-          </Text>
+          <View style={{backgroundColor: isPressed ? this.props.pressedColor : 'transparent', borderRadius:25,width:20}}>
+            <Text style={{ color: this.props.depressedColor, textAlign:'center'  }}>
+              {date.date}
+            </Text>
+          </View>
         </TouchableOpacity>
       );
     });
@@ -146,7 +165,7 @@ DatePicker.defaultProps = {
     dateFormat: "D",
     pressedColor: "#fff",
     depressedColor: "#7d7c7b",
-    locale: 'es-mx'
+    locale: 'es'//-mx
 }
 
 DatePicker.propTypes = {
